@@ -4,7 +4,11 @@
  */
 package Manager;
 
+import Serializer.FilePersistence;
+import Serializer.SerializerCSVMusic;
 import classes.Music;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,8 +73,22 @@ public class ManagerListMusic {
         return "ManagerListMusic{" + "listMusics=" + listMusics + '}';
     }
     
-    // method save file{}
+    public void saveInFile(String pathFile) throws IOException {
+        SerializerCSVMusic serializer = new SerializerCSVMusic();
+        String csvData = serializer.toCSV(listMusics);
+        
+        FilePersistence filePersistence = new FilePersistence();
+        filePersistence.saveToFile(csvData, pathFile);
+        System.out.println("Musicas salvas com sucesso em"+ pathFile);
+    }   
     
-    
-    //method load file{}
+    public void loadOfFile(String pathFile) throws FileNotFoundException {
+        FilePersistence filePersistence = new FilePersistence();
+        String csvData = filePersistence.loadFromFile(pathFile);
+        
+        SerializerCSVMusic serializer = new SerializerCSVMusic();
+        this.listMusics = serializer.fromCSV(csvData);
+        
+        System.out.println("Musicas carregadas com sucesso de "+ pathFile);
+    }
 }
