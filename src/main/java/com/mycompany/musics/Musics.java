@@ -4,6 +4,8 @@
 
 package com.mycompany.musics;
 
+import Frontend.FrMusic;
+
 /**
  *
  * @author Windows
@@ -11,6 +13,7 @@ package com.mycompany.musics;
 public class Musics {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        FrMusic frame = new FrMusic();
+        frame.setVisible(true);
     }
 }

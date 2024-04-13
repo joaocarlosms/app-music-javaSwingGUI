@@ -4,19 +4,72 @@
  */
 package Frontend;
 
+import Manager.ManagerListMusic;
+import classes.Music;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Windows
  */
 public class FrMusic extends javax.swing.JFrame {
-
+    
+    public boolean editing;
+    public String oldTitle;
+    public Manager.ManagerListMusic managerMusic;
     /**
      * Creates new form FrMusic
      */
     public FrMusic() {
+        this.editing = false;
+        this.oldTitle = " ";
+        this.managerMusic = new ManagerListMusic();
+        
         initComponents();
+        this.habilityFields(editing);
+        
     }
-
+    
+    public void habilityFields(boolean flag) {
+        inputTitle.setEnabled(flag);
+        inputArtist.setEnabled(flag);
+        inputDuration1.setEnabled(flag);
+        inputPrice.setEnabled(flag);
+    }
+    
+    public void clearFields() {
+        inputTitle.setText("");
+        inputArtist.setText("");
+        inputDuration1.setText("");
+        inputPrice.setText("");
+    }
+    
+    public void objectForFields(Music mc) {
+        inputTitle.setText(mc.getTitle());
+        inputArtist.setText(mc.getArtist());
+        inputDuration1.setText(mc.getDuration());
+        inputPrice.setText(mc.getPrice() + "");
+    }
+    
+    public Music fieldsForObjects() {
+        Music mc = new Music();
+       
+        mc.setTitle(inputTitle.getText());
+        mc.setArtist(inputArtist.getText());
+        mc.setDuration(inputDuration1.getText());
+        
+        String priceStr = inputPrice.getText();
+        double aux = 0.0;
+        
+        if(!priceStr.isEmpty())  {
+            aux = Double.parseDouble(priceStr);
+        }
+        
+        mc.setPrice(aux);
+        
+        return mc;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,21 +79,341 @@ public class FrMusic extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelGeral = new javax.swing.JPanel();
+        jLabelTitle = new javax.swing.JLabel();
+        jPanelButtons = new javax.swing.JPanel();
+        btnNew = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnRemove = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+        btnGenerationFile = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        jPanelTexts = new javax.swing.JPanel();
+        textDuration = new javax.swing.JLabel();
+        inputTitle = new javax.swing.JTextField();
+        textArtist = new javax.swing.JLabel();
+        inputArtist = new javax.swing.JTextField();
+        textTitle1 = new javax.swing.JLabel();
+        inputPrice = new javax.swing.JTextField();
+        textPrice = new javax.swing.JLabel();
+        inputDuration1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textAreaData = new javax.swing.JTextArea();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanelGeral.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabelTitle.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelTitle.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabelTitle.setForeground(new java.awt.Color(51, 153, 0));
+        jLabelTitle.setText("APP MUSIC");
+
+        jPanelButtons.setBackground(new java.awt.Color(0, 0, 0));
+        jPanelButtons.setLayout(new java.awt.GridLayout());
+
+        btnNew.setBackground(new java.awt.Color(51, 102, 0));
+        btnNew.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/novo_32x32.png"))); // NOI18N
+        btnNew.setText("Novo");
+        btnNew.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btnNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewActionPerformed(evt);
+            }
+        });
+        jPanelButtons.add(btnNew);
+
+        btnEdit.setBackground(new java.awt.Color(51, 102, 0));
+        btnEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit3_32x32.png"))); // NOI18N
+        btnEdit.setText("Editar");
+        btnEdit.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+        jPanelButtons.add(btnEdit);
+
+        btnRemove.setBackground(new java.awt.Color(51, 102, 0));
+        btnRemove.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/del_32x32.png"))); // NOI18N
+        btnRemove.setText("Deletar");
+        btnRemove.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
+        jPanelButtons.add(btnRemove);
+
+        btnCancel.setBackground(new java.awt.Color(51, 102, 0));
+        btnCancel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel_32x32.png"))); // NOI18N
+        btnCancel.setText("Cancelar");
+        btnCancel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+        jPanelButtons.add(btnCancel);
+
+        btnGenerationFile.setBackground(new java.awt.Color(51, 102, 0));
+        btnGenerationFile.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnGenerationFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/excel.png"))); // NOI18N
+        btnGenerationFile.setText("Gerar EXCEL");
+        btnGenerationFile.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btnGenerationFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerationFileActionPerformed(evt);
+            }
+        });
+        jPanelButtons.add(btnGenerationFile);
+
+        btnSave.setBackground(new java.awt.Color(51, 102, 0));
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_32x32.png"))); // NOI18N
+        btnSave.setText("Salvar");
+        btnSave.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+        jPanelButtons.add(btnSave);
+
+        btnSearch.setBackground(new java.awt.Color(51, 102, 0));
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
+        btnSearch.setText("Pesquisar");
+        btnSearch.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        jPanelButtons.add(btnSearch);
+
+        jPanelTexts.setBackground(new java.awt.Color(0, 0, 0));
+
+        textDuration.setBackground(new java.awt.Color(255, 255, 255));
+        textDuration.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        textDuration.setForeground(new java.awt.Color(255, 255, 255));
+        textDuration.setText("Tempo de duração:");
+
+        inputTitle.setBackground(java.awt.Color.white);
+        inputTitle.setForeground(new java.awt.Color(0, 0, 0));
+
+        textArtist.setBackground(new java.awt.Color(255, 255, 255));
+        textArtist.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        textArtist.setForeground(new java.awt.Color(255, 255, 255));
+        textArtist.setText("Nome do artista: ");
+
+        inputArtist.setBackground(new java.awt.Color(255, 255, 255));
+        inputArtist.setForeground(new java.awt.Color(0, 0, 0));
+        inputArtist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputArtistActionPerformed(evt);
+            }
+        });
+
+        textTitle1.setBackground(new java.awt.Color(255, 255, 255));
+        textTitle1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        textTitle1.setForeground(new java.awt.Color(255, 255, 255));
+        textTitle1.setText("Título da música: ");
+
+        inputPrice.setBackground(new java.awt.Color(255, 255, 255));
+        inputPrice.setForeground(new java.awt.Color(0, 0, 0));
+
+        textPrice.setBackground(new java.awt.Color(255, 255, 255));
+        textPrice.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        textPrice.setForeground(new java.awt.Color(255, 255, 255));
+        textPrice.setText("Preço:");
+
+        inputDuration1.setBackground(new java.awt.Color(255, 255, 255));
+        inputDuration1.setForeground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout jPanelTextsLayout = new javax.swing.GroupLayout(jPanelTexts);
+        jPanelTexts.setLayout(jPanelTextsLayout);
+        jPanelTextsLayout.setHorizontalGroup(
+            jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTextsLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textArtist)
+                    .addComponent(textTitle1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputArtist, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTextsLayout.createSequentialGroup()
+                        .addComponent(textDuration)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(inputDuration1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTextsLayout.createSequentialGroup()
+                        .addComponent(textPrice)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(inputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelTextsLayout.setVerticalGroup(
+            jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTextsLayout.createSequentialGroup()
+                .addGroup(jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTextsLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(textTitle1)
+                            .addComponent(inputTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(textDuration)
+                        .addComponent(inputDuration1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(textArtist)
+                        .addComponent(inputArtist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelTextsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(textPrice)
+                        .addComponent(inputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        textAreaData.setBackground(new java.awt.Color(255, 255, 255));
+        textAreaData.setColumns(20);
+        textAreaData.setForeground(new java.awt.Color(0, 0, 0));
+        textAreaData.setRows(5);
+        textAreaData.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jScrollPane1.setViewportView(textAreaData);
+
+        javax.swing.GroupLayout jPanelGeralLayout = new javax.swing.GroupLayout(jPanelGeral);
+        jPanelGeral.setLayout(jPanelGeralLayout);
+        jPanelGeralLayout.setHorizontalGroup(
+            jPanelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanelButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelTexts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGeralLayout.createSequentialGroup()
+                .addContainerGap(139, Short.MAX_VALUE)
+                .addGroup(jPanelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGeralLayout.createSequentialGroup()
+                        .addComponent(jLabelTitle)
+                        .addGap(307, 307, 307))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGeralLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(129, 129, 129))))
+        );
+        jPanelGeralLayout.setVerticalGroup(
+            jPanelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelGeralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelTexts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGenerationFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerationFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGenerationFileActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        Music mc = this.fieldsForObjects();
+        
+        if(this.editing) {
+            managerMusic.attMusic(oldTitle, mc);
+        } else {
+            managerMusic.addNewMusics(mc);
+        }
+        
+        this.clearFields();
+        this.habilityFields(false);
+        this.editing = false;
+        
+        String list = managerMusic.toString();
+        textAreaData.setText(list);
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String title_wanted = JOptionPane.showInputDialog("Informe o titulo da música que você deseja pesquisar: ");
+        
+        Music mc = managerMusic.findMusic(title_wanted);
+        
+        if(mc == null) {
+            JOptionPane.showInputDialog("Música não encontrada!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Musica encontrada!");
+            
+            String musicFound = mc.toString();
+            textAreaData.setText(musicFound);
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void inputArtistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputArtistActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_inputArtistActionPerformed
+
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        this.habilityFields(true);
+        this.clearFields();
+        this.editing = false;
+    }//GEN-LAST:event_btnNewActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        String title_wanted = JOptionPane.showInputDialog("Informe o titulo da música que deseja remover: ");
+        
+        boolean musicRemoved = managerMusic.removeMusic(title_wanted);
+        
+        if(!musicRemoved) {
+            JOptionPane.showInputDialog("Música não encontrada!");
+        } else {
+            managerMusic.removeMusic(title_wanted);
+            JOptionPane.showMessageDialog(this , "Musica removida com sucesso!");
+        }
+        
+        String list = managerMusic.toString();
+        textAreaData.setText(list);
+    }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.clearFields();
+        this.habilityFields(false);
+        this.editing = false;
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +451,26 @@ public class FrMusic extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnGenerationFile;
+    private javax.swing.JButton btnNew;
+    private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JTextField inputArtist;
+    private javax.swing.JTextField inputDuration1;
+    private javax.swing.JTextField inputPrice;
+    private javax.swing.JTextField inputTitle;
+    private javax.swing.JLabel jLabelTitle;
+    private javax.swing.JPanel jPanelButtons;
+    private javax.swing.JPanel jPanelGeral;
+    private javax.swing.JPanel jPanelTexts;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea textAreaData;
+    private javax.swing.JLabel textArtist;
+    private javax.swing.JLabel textDuration;
+    private javax.swing.JLabel textPrice;
+    private javax.swing.JLabel textTitle1;
     // End of variables declaration//GEN-END:variables
 }

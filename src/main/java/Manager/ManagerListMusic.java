@@ -59,10 +59,10 @@ public class ManagerListMusic {
         return null;
     }
     
-    public void attMusic(String titleMusic, String newTitleMusic) {
+    public void attMusic(String titleMusic, Music newTitleMusic) {
         for(Music music : listMusics) {
             if(music.getTitle().equals(titleMusic)) {
-                music.setTitle(newTitleMusic);
+                music.setTitle(newTitleMusic.getTitle());
                 System.out.println("Musica atualizada com sucesso!");
             }
         }
