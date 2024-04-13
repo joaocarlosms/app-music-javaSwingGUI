@@ -91,4 +91,8 @@ public class ManagerListMusic {
         
         System.out.println("Musicas carregadas com sucesso de "+ pathFile);
     }
+    
+    public void printMusics() {
+        System.out.println(listMusics.toString());
+    }
 }
