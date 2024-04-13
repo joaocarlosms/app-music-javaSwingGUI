@@ -6,6 +6,9 @@ package Frontend;
 
 import Manager.ManagerListMusic;
 import classes.Music;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -155,11 +158,6 @@ public class FrMusic extends javax.swing.JFrame {
         btnCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel_32x32.png"))); // NOI18N
         btnCancel.setText("Cancelar");
         btnCancel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        btnCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelActionPerformed(evt);
-            }
-        });
         jPanelButtons.add(btnCancel);
 
         btnGenerationFile.setBackground(new java.awt.Color(51, 102, 0));
@@ -343,14 +341,23 @@ public class FrMusic extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGenerationFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerationFileActionPerformed
-        // TODO add your handling code here:
+         try {
+            managerMusic.loadOfFile("Musics.csv");
+            textAreaData.setText(managerMusic.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(FrMusic.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnGenerationFileActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         Music mc = this.fieldsForObjects();
         
         if(this.editing) {
-            managerMusic.attMusic(oldTitle, mc);
+            try {
+                managerMusic.attMusic(oldTitle, mc);
+            } catch(IOException ex) {
+                Logger.getLogger(FrMusic.class.getName()).log(Level.SEVERE, null, ex);
+            }  
         } else {
             managerMusic.addNewMusics(mc);
         }
@@ -361,6 +368,12 @@ public class FrMusic extends javax.swing.JFrame {
         
         String list = managerMusic.toString();
         textAreaData.setText(list);
+        
+        try {
+            managerMusic.saveInFile("Musics.csv");
+        }catch(IOException ex) {
+            Logger.getLogger(FrMusic.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -406,14 +419,26 @@ public class FrMusic extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+        Music newMusic = new Music();
+        String music_wanted = JOptionPane.showInputDialog("Informe o nome da música que você deseja atualizar: ");
+        
+        managerMusic.findMusic(music_wanted);
+        
+        String newTitle = JOptionPane.showInputDialog("Informe o novo titulo da música: ");
+        newMusic.setTitle(newTitle);
+        String newArtist = JOptionPane.showInputDialog("Informe o/a novo(a) artista da música: ");
+        newMusic.setTitle(newArtist);
+        String newDuration = JOptionPane.showInputDialog("Informe o novo tempo de duração da música: ");
+        newMusic.setTitle(newDuration);
+        String newPrice = JOptionPane.showInputDialog("Informe o novo preço da música: ");
+        newMusic.setTitle(newPrice);
+        
+        try {
+            this.managerMusic.attMusic(music_wanted, newMusic);
+        } catch(IOException ex) {
+            Logger.getLogger(FrMusic.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        this.clearFields();
-        this.habilityFields(false);
-        this.editing = false;
-    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments

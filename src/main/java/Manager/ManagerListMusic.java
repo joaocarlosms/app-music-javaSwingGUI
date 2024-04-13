@@ -59,13 +59,16 @@ public class ManagerListMusic {
         return null;
     }
     
-    public void attMusic(String titleMusic, Music newTitleMusic) {
+    public void attMusic(String titleMusic, Music newMusic) throws IOException {
         for(Music music : listMusics) {
             if(music.getTitle().equals(titleMusic)) {
-                music.setTitle(newTitleMusic.getTitle());
+                music.setTitle(newMusic.getTitle());
+                music.setArtist(newMusic.getArtist());
+                music.setDuration(newMusic.getDuration());
+                music.setPrice(newMusic.getPrice());
                 System.out.println("Musica atualizada com sucesso!");
             }
-        }
+        } 
     }
 
     @Override
@@ -79,7 +82,7 @@ public class ManagerListMusic {
         
         FilePersistence filePersistence = new FilePersistence();
         filePersistence.saveToFile(csvData, pathFile);
-        System.out.println("Musicas salvas com sucesso em"+ pathFile);
+        System.out.println("Musicas salvas com sucesso em "+ pathFile);
     }   
     
     public void loadOfFile(String pathFile) throws FileNotFoundException {
@@ -89,7 +92,7 @@ public class ManagerListMusic {
         SerializerCSVMusic serializer = new SerializerCSVMusic();
         this.listMusics = serializer.fromCSV(csvData);
         
-        System.out.println("Musicas carregadas com sucesso de "+ pathFile);
+        System.out.println("Musicas carregadas com sucesso de  "+ pathFile);
     }
     
     public void printMusics() {
